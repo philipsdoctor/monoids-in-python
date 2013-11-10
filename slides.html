@@ -1,0 +1,143 @@
+<div class="slides">
+    <section>
+        <h1>Monoids In Python</h1>
+<img style="width: 659.699px; height: 498px; max-height: none; max-width: none;" src="https://s3.amazonaws.com/media-p.slid.es/uploads/philipdoctor/images/145563/One.jpg">
+    </section>
+    <section>
+        <h2>THe Difficulty With Math</h2>
+<p>
+<br>
+    </p>
+<ul>
+<li>There is a dense language surrounding math so a single search for a term can lead to many follow up searches (ex: functor &amp; homomorphism)<br>
+</li>
+<li>&nbsp;Many symbols defy a simple google search&nbsp; ⊕</li>
+<li>The application of what you're reading to CS is often unstated and unclear.</li>
+<li>I can't fix that for all of math, but I can try to elucidate this for monoids.<br>
+</li>
+</ul>
+</section>
+<section>
+    <h2>Let's Look at Some Functions</h2>
+<ul>
+<li>1 + 1 = 2</li>
+<li>"Hello " + "World" = "Hello World"</li>
+<li>shopping_cart_items.add_items(other_shopping_cart) = more_shopping_cart_items&nbsp;</li>
+</ul>
+<p>
+    <br>
+</p>
+<p>Let's think about the Types here</p>
+<ul>
+<li>int + int = int</li>
+<li>string + string = string</li>
+<li>shopping_cart&nbsp; (add_items) shopping_cart = shopping_cart<br>
+</li>
+</ul>
+</section>
+<section>
+    <h2>First requirement of Monoids</h2>
+<p>A monoid takes type X and returns type X! <br>
+</p>
+<p>(fancy math word is closure, because we really needed another thing in CS called closure....)<br>
+</p>
+<div align="left">
+<ul>
+<li>5 / 2 = 2.5 (int / int = float, fails)</li>
+<li>true AND false = false (bool AND bool = bool, closure)</li>
+<li>2 == 3 = false (int == int = bool, fails)</li>
+<li>shopping_cart.calculateShipping() = 15.23 (shopping_cart calculateShipping = float, fails)</li>
+<li>[1, 2, "foo"] + ["bar", 3, 4] = [1, 2, "foo", "bar", 3, 4] (list + list = list, closure)<br>
+</li>
+</ul>
+</div>
+</section>
+<section>
+    <h2>Why do we care about closure?</h2>
+<p>You can chain things together! <br>
+</p>
+<p>(you've probably been doing this for a long time)<br>
+</p>
+<p align="left">For strings!<br>
+</p>
+<p align="left">connection_string = host + ":" + port + "/" resource_path</p>
+<p align="left">
+<br>
+</p>
+<p align="left">For fluent APIs!</p>
+<p align="left">email_to_send.set_to(['foo@foo.com']).set_from('bar@bar.com')</p>
+<p align="left">
+<br>
+</p>
+<p align="left">For IF control flow!</p>
+<p align="left">if meat == 'spam' or meat == 'eggs': ...<br>
+</p>
+</section>
+<section>
+    <h2>Let's look at some more equations!</h2>
+<p>
+    <br>
+</p>
+<div align="left">
+<ul>
+<li>1 + 0 = 1</li>
+<li>[1, 2] + [] = [1, 2]</li>
+<li>shopping_cart.add_items(empty_cart) = shopping_cart</li>
+</ul>
+<p>
+<br>
+</p>
+<p align="center">Think about the general rule</p>
+<ul>
+<li>Int + nothing = the same int</li>
+<li>List + nothing = the same list</li>
+<li>shopping_cart add_items nothing = the same shopping_cart<br>
+</li>
+</ul>
+</div>
+</section>
+<section>
+    <h2>Second requirement of Monoids</h2>
+<p>We need to have a concept of nothing! <br>
+</p>
+<p align="left">Or stated more like a math person, 'we need something to give our function, in addition to a "real" argument, that will always give back the same "real" argument' (called identity)</p>
+<p align="left">
+<br>
+</p>
+<div align="left">
+<ul>
+<li>&nbsp;x AND true = x (identity)</li>
+<li>set1 &amp; set2 = set3 (there is no identity for set intersection, fails)</li>
+<li>1 * x = x (identity)<br>
+</li>
+</ul>
+</div>
+</section>
+<section>
+    <h2>Why do we care about identity?</h2>
+<p>A lot of annoying problems become easy<br>
+</p>
+<p>(you've probably been doing this already)</p>
+<div align="left">
+<ul>
+<li>Problem: given a list of bools, are they all true? <br>
+</li>
+</ul>
+<br>
+<font style="font-size: 32px;">x = [True, True, False]<br>def all_true(bool_list):<br>&nbsp;&nbsp;&nbsp; running_value = STARTING_VALUE<br>&nbsp;&nbsp;&nbsp; for cur_bool in bool_list:<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; running_value = running_value and cur_bool<br>&nbsp;&nbsp;&nbsp; return running_value<br>print all_true(x)</font>
+</div>
+</section>
+<section>
+    <h2>Last set of equations to consider!</h2>
+<div align="left">
+    <ul>
+<li>1 + (2 + 3) = 1 + 2 + 3</li>
+<li>[1, 2, 3] + ([4, 5] + [6, 7]) = [1, 2, 3] + [4, 5] + [6, 7]</li>
+<li>
+    <br>
+</li>
+</ul>
+</div>
+</section>
+</div>
+
