@@ -130,14 +130,192 @@
 <section>
     <h2>Last set of equations to consider!</h2>
 <div align="left">
-    <ul>
+<ul>
 <li>1 + (2 + 3) = 1 + 2 + 3</li>
 <li>[1, 2, 3] + ([4, 5] + [6, 7]) = [1, 2, 3] + [4, 5] + [6, 7]</li>
-<li>
+<li>cart_1.add_items(cart_2.add_items(cart_3)) =</li>
+</ul>
+<p>inter_cart = cart_1.add_items(cart_2)</p>
+<p>inter_cart.add_items(cart_3)</p>
+<p>
     <br>
+</p>
+<p>
+<br>
+</p>
+</div>
+</section>
+<section>
+    <h2>Third requirement of Monoids</h2>
+<p>We can group the order however we want (associativity)</p>
+<div align="left">
+    <ul>
+<li>2 * 3 * 4 = 2 * (3 * 4)&nbsp;&nbsp;&nbsp;&nbsp; associative!</li>
+<li>2 / 3 / 4 != 2 / (3 / 4)&nbsp;&nbsp;&nbsp; fails!<br>
 </li>
 </ul>
 </div>
+</section>
+<section>
+    <h2>Why do we care about Associativity?</h2>
+<p>Huge jobs can become many small jobs</p>
+<p>(you probably already do this)</p>
+<div align="left">
+<ul>
+    <li>Count words in a book <br>
+</li>
+</ul>
+<p>- make it smaller, count one page at a time</p>
+<p>- make it parallel, you count page 1, I count page two</p>
+<p>- make it incremental, I counted pages 1-5 today, tomorrow I can count page 6 and not recount 1-5<br>
+</p>
+</div>
+</section>
+<section>
+    <h2>That's what a monoid is</h2>
+<div align="left">
+<ol>
+<li>Closure, i.e. takes type X, returns type X</li>
+<li>Identity, i.e. has something like a "zero" <br>
+</li>
+<li>Associativity, i.e. I can group the function however I want</li>
+</ol>
+<p>
+    <br>
+</p>
+<p>
+<br>
+</p>
+<p>
+<br>
+</p>
+<p>
+<br>
+</p>
+<p align="center">**So much talk about things I already do Phil! Excite me!**<br>
+</p>
+</div>
+</section>
+<section>
+    <h2>MAP-Reduce</h2>
+<p align="left">What is reduce?</p>
+<p align="left">Reduce is like an aggregator, it takes a function, an iterable, and then accumulates the iterable using the function, example:</p>
+<p align="left"> <tt class="docutils literal">
+    <span class="pre">reduce(lambda</span> <span class="pre">x,</span> <span class="pre">y:</span> <span class="pre">x+y,</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5])</span>
+</tt>
+</p>
+<p align="left">
+<tt class="docutils literal">
+    <span class="pre">
+        <tt>
+            <tt>Many implementations look like this</tt> </tt>
+        </span>
+    </tt>
+    <tt class="docutils literal">
+        <span class="pre">
+            <tt>
+                <tt class="docutils literal">
+                    <span class="pre">((((1+2)+3)+4)+5)</span>
+                </tt>
+            </tt>
+        </span>
+    </tt>
+</p>
+<p align="left">
+<br>
+<tt class="docutils literal">
+    <span class="pre">
+        <tt>
+            <tt class="docutils literal">
+                <span class="pre">
+                </span>
+            </tt>
+        </tt>
+    </span>
+</tt>
+</p>
+<p align="left">
+<tt class="docutils literal">
+    <span class="pre">
+        <tt>
+            <tt class="docutils literal">
+                <span class="pre">
+                    <tt>So if we have the problem "Sum all prices in our <tt>shopping </tt>cart"<tt>, we wonder, "<tt>C</tt>
+                </tt>an we use<tt> reduce function and </tt>thi<tt>
+                <tt>n</tt>k with m</tt>
+            </tt>onoids?!"<br>
+        </span>
+    </tt>
+</tt>
+</span>
+</tt>
+</p>
+</section>
+<section>
+    <h2>Map-Reduce (2)</h2>
+<p align="left">
+    <font style="font-size: 24px;">shopping_cart = [1.12, 5.23, 9.99, 62.11, 12.12]</font>
+</p>
+<p align="left">
+<font style="font-size: 24px;">Rule #1 (closure) We can chain safely!</font>
+</p>
+<p align="left">
+<font style="font-size: 24px;">1.12 + 5.23 + 9.99 + 62.11 + 12.12<br>
+</font>
+</p>
+<p align="left">
+<font style="font-size: 24px;">Rule #2&nbsp; (identity)<br>
+</font>
+</p>
+<p align="left">
+<font style="font-size: 24px;">We don't need it yet</font>
+</p>
+<p align="left">
+<font style="font-size: 24px;">Rule #3 (associativity)</font>
+</p>
+<p align="left">
+<font style="font-size: 24px;">((((1.12 + 5.23) + 9.99) + 62.11) + 12.12)</font>
+</p>
+<p align="left">
+<font style="font-size: 24px;">So we know we can use reduce here, because we satisfy our monoid properties.</font>
+<br>
+</p>
+</section>
+<section>
+    <h2>Map-Reduce (3)</h2>
+<p>But wait, there's more!</p>
+<p align="left">We've told our library we want to reduce, not *how* to reduce, what if 1.12 + 5.23 + 9.99 + 62.11 + 12.12 could be run on many servers?</p>
+<p align="left">#3 1.12 + 5.23 + 9.99 + 62.11 + 12.12 = (1.12 + 5.23) + (9.99 + 62.11) + 12.12<br>
+</p>
+<p align="left">Server A: 1.12 + 5. 23</p>
+<p align="left">Server B: 9.99 + 62.11</p>
+<p align="left">Server C: 12.12 + 0 &lt;-- Rule #2 helps us :)<br>
+<font style="font-size: 24px;">
+</font>
+</p>
+</section>
+<section>
+    <h2>Map-Reduce (4)</h2>
+<p>That's great but I have a list of shopping cart items, not floats!</p>
+<p align="left">Map function is our friend here, it takes each object in our collection and runs a function on it.&nbsp; We can use it to TRANSFORM OUR BORING OBJECTS INTO MONOIDS!!!!!</p>
+<p align="left">
+    <font style="font-size: 24px;">class shopping_item(object):<br>&nbsp;&nbsp;&nbsp; def __init__(self, price):<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.price = price<br>
+        <br>cart = [shopping_item(1.12), shopping_item(5.23), shopping_item(9.99)]<br>cart_float = map(lambda shop_item: shop_item.price, cart)</font>
+    </p>
+<p align="left">
+    <font style="font-size: 24px;">total = reduce(lambda x, y: x + y, cart_float)</font>
+</p>
+</section>
+<section>
+    <h2>Parsing</h2>
+</section>
+<section>
+    <h2>special thanks</h2>
+<p>
+    <br>
+</p>
+<p>My coworker Matthew Wampler-Doty who was so excited that I was going to give a talk on monoids in python, that he started e-mailing me examples he wrote.<br>
+</p>
 </section>
 </div>
 
